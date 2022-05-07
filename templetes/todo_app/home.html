@@ -1,0 +1,57 @@
+{% extends 'base.html'%} {% block title %} Todo_app {% endblock title %} {% block content %}
+<div class="add" style=" padding-left:90%; margin-bottom: 10px;">
+    <a href="{% url 'add'  %}" class="btn btn-outline-primary">Add Notes</a>
+</div>
+{% if not notes %}
+<h2>No Notes Available</h2>
+<Strong>Please Add Note !!!!</Strong> {% else %} {% for note in notes %}
+
+<div style=" border: 10px solid #969696;">
+    <div>
+        <div class="title" style="margin: 20px; text-transform:capitalize;">
+            <h4>Title</h4>
+            {% if note.is_completed %}
+            <del> <h6>{{note.title}}</h6> </del> {% else %}
+            <h6>{{note.title}}</h6>
+            {% endif %}
+
+        </div>
+        <div class="description " style="margin: 20px;">
+            <h4>Description</h4>
+            {% if note.is_completed %}
+            <del><h6>{{note.description}}</h6></del> {% else %}
+            <h6>{{note.description}}</h6> {% endif%}
+
+            <strong>{{note.date}}</strong>
+
+
+        </div>
+
+
+    </div>
+    <div class="row" style="padding-left: 10%; padding-bottom:10px;">
+        <div class="is_completed" style="margin-right: 10px;">
+            {% if note.is_completed %}
+            <a href="{% url 'is_completed' id=note.id %}" class="btn btn-primary">Mark as Incomplete</a> {% else %}
+            <a href="{% url 'is_completed' id=note.id %}" class="btn btn-primary">Mark as Complete</a> {% endif %}
+        </div>
+        {% if note.is_completed %} {% else %}
+        <div class="edit" style="margin-right: 10px;">
+
+            <a href="{% url 'edit' id=note.id %}" class="btn btn-primary">Edit</a>
+
+
+        </div>{% endif %}
+        <div class="delete">
+            <a href="{% url 'delete' id=note.id %}" class="btn btn-primary ">Delete</a>
+        </div>
+
+    </div>
+</div>
+
+{% endfor %} {% endif%}
+<div class="add" style=" padding-left:40%; margin-top: 10px;">
+    <a href="{% url 'add'  %}" class="btn btn-outline-primary">Add Notes</a>
+</div>
+
+{% endblock content %}
